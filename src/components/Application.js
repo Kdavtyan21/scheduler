@@ -1,27 +1,39 @@
 
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios"
 import "components/Application.scss";
 import DayList from "components/DayList"
-const days = [
+import Appointment from"components/Appointment" 
+
+const appointments = [
   {
     id: 1,
-    name: "Monday",
-    spots: 2,
+    time: "12pm",
   },
   {
     id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
+    time: "1pm",
+    interview: {
+      student: "Lydia Miller-Jones",
+      interviewer: {
+        id: 1,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png",
+      }
+    }
+  }
 ];
+
+
 export default function Application(props) {
-  const [ day, setDay ] = useState("Monday") 
+  const [ day, setDay ] = useState("Monday")
+  const [ days, setDays ] = useState([])
+  useEffect(cb => {
+    axios.get("/api/days")
+    .then(response => {
+      setDays(response.data)
+    })
+  }, [])
   return (
     <main className="layout">
       
@@ -46,10 +58,13 @@ export default function Application(props) {
   alt="Lighthouse Labs"
 />
       </section>
-      <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
-      </section>
-      
+      <section className="schedule" >
+      {appointments.map(appointment => {
+       return  <Appointment key={appointment.id} {...appointment} />
+      } )}
+      <Appointment key="last" time="5pm" />
+      </section>  
     </main>
   );
 }
+
