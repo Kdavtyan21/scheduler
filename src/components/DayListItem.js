@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/heading-has-content */
 import React from "react";
 import "components/DayListItem.scss"
 const classnames = require("classnames")
@@ -23,8 +22,8 @@ export default function DayListItem(props) {
 
   return (
     <li className={dayClass} onClick={() => props.setDay(props.name)}>
-      <h2>{props.name}</h2>
-      <h3>{formalSpots()}</h3>
+      <h2 className={"text--regular"} >{props.name}</h2>
+      <h3 className={"text--light"}>{formalSpots()}</h3>
     </li>
   );
 }
