@@ -27,3 +27,19 @@ if (!interview) {
 
 }
 
+export function getInterviewersForDay(state, day) {
+  if (state.days.length === 0) {
+    return []
+  }
+    const filteredDays = state.days.find(dayObj => dayObj.name === day);
+    if (!filteredDays) {
+      return []
+    }
+    const filteredDaysId = filteredDays.interviewers.map(appointmentId => state.interviewers[appointmentId])
+  if(filteredDays.interviewers.length === 0) {
+  return [];
+  } else {
+    return filteredDaysId;
+  }
+}
+
