@@ -7,6 +7,7 @@ import useVisualMode from "hooks/useVisualMode";
 import Form from "components/Appointment/Form"
 import Status from "./Status";
 import Confirm from "./Confirm"
+import Error from "./Error";
 
 
 const EMPTY = "EMPTY";
@@ -16,6 +17,8 @@ const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
 const EDIT = "EDIT";
+const ERROR_ADD = "ERROR_ADD";
+const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment (props) {
 
@@ -25,7 +28,10 @@ export default function Appointment (props) {
       student: name,
       interviewer
     };
-    props.bookInterview(props.id, interview).then(() => transition(SHOW))
+    props
+    .bookInterview(props.id, interview)
+    .then(() => transition(SHOW))
+    .catch(() => transition(ERROR_ADD))
   }
 
   function ondelete(name, interviewer) {
@@ -34,7 +40,10 @@ export default function Appointment (props) {
       student: name,
       interviewer
     };
-    props.cancelInterview(props.id, interview).then(() => transition(EMPTY))
+    props
+    .cancelInterview(props.id, interview)
+    .then(() => transition(EMPTY))
+    .catch(() => transition(ERROR_DELETE))
   }
 
   function onedit(name, interviewer) {
@@ -44,6 +53,7 @@ export default function Appointment (props) {
       interviewer
     };
     props.bookInterview(props.id, interview).then(() => transition(SHOW))
+    .catch(transition(ERROR_DELETE))
   }
   
 
@@ -67,7 +77,7 @@ export default function Appointment (props) {
   value={[]} 
   interviewer={[]} 
   setInterviewer={[]}
-  onCancel={() => back(EMPTY)}
+  onCancel={() => back()}
   onSave={save}
 />)}
 {mode === SAVING && (
@@ -92,9 +102,21 @@ export default function Appointment (props) {
   name={props.interview.student} 
   interviewer={props.interview.interviewer.id} 
   setInterviewer={[]}
-  onCancel={() => back(EMPTY)}
+  onCancel={() => back()}
   onSave={save}
 />)}
+{mode === ERROR_DELETE && (
+  <Error
+  message="CANT DELETE IT FOOL!"
+  onClose={() => transition(SHOW)}
+  />
+)}
+{mode === ERROR_ADD && (
+  <Error
+  message="CANT CREATE IT FOOL!"
+  onClose={() => transition(EMPTY)}
+  />
+)}
     </article>
   )
 }

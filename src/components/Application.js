@@ -18,16 +18,18 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     };
-   console.log('interview', interview)
+
    return axios({
     url: `/api/appointments/${id}`,
     data: null,
     method: "DELETE"
    })
-   .then( setState({
-    ...state,
-    appointments
-  }))
+   .then(() => {
+    setState({
+      ...state,
+      appointments
+    })
+   })
     
   }
 
@@ -47,10 +49,11 @@ export default function Application(props) {
     data: appointment,
     method: "PUT"
    })
-   .then( setState({
+   .then(() => setState({
     ...state,
     appointments
   }))
+  
     
   }
 
