@@ -46,16 +46,6 @@ export default function Appointment (props) {
     .catch(() => transition(ERROR_DELETE))
   }
 
-  function onedit(name, interviewer) {
-    transition(CREATE)
-    const interview = {
-      student: name,
-      interviewer
-    };
-    props.bookInterview(props.id, interview).then(() => transition(SHOW))
-    .catch(transition(ERROR_DELETE))
-  }
-  
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -89,7 +79,7 @@ export default function Appointment (props) {
   <Confirm
   message="You sure?"
   onConfirm={ondelete}
-  onCancel={onedit}
+  onCancel={() => back()}
   />
 )}
 {mode === DELETING && (
