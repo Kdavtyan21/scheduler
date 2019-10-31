@@ -9,6 +9,28 @@ import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "help
 
 export default function Application(props) {
 
+  function cancelInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+   console.log('interview', interview)
+   return axios({
+    url: `/api/appointments/${id}`,
+    data: null,
+    method: "DELETE"
+   })
+   .then( setState({
+    ...state,
+    appointments
+  }))
+    
+  }
+
 
   function bookInterview(id, interview) {
     const appointment = {
@@ -88,6 +110,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
         />
       } )}
       <Appointment key="last" time="5pm" />
