@@ -1,41 +1,15 @@
 import { useEffect, useReducer } from "react";
 import axios from "axios"
-export default function useApplicationData (props) {
-  const SET_DAY = "SET_DAY";
-  const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
-  const SET_INTERVIEW = "SET_INTERVIEW";
+import reducer, {
+  SET_DAY,
+  SET_APPLICATION_DATA,
+  SET_INTERVIEW
+} from "reducers/application";
 
+export default function useApplicationData (props) {
 
   
-  function reducer(state, action) {
-    const {appointments, day, interview, id, interviewers, type, days} = action
-    switch (type) {
-      case SET_DAY:
-        return {
-          ...state, day
-        }
-      case SET_APPLICATION_DATA:
-        return { 
-          ...state, days, appointments, interviewers 
-        }
-        case SET_INTERVIEW: {
-          const appointment = {
-            ...state.appointments[id],
-            interview: interview ? { ...interview } : null
-            };
-          const appointments = {
-            ...state.appointments,
-            [id]: appointment
-          };
-            return { ...state, id, appointments }
-          }
-          default:
-            throw new Error(
-              `Tried to reduce with unsupported action type: ${type}`
-              );
-            }
-          }
-          
+  
           const [state, dispatch] = useReducer( reducer, {
             day: "Monday",
             days: [],
@@ -77,13 +51,8 @@ export default function useApplicationData (props) {
 
   function cancelInterview(id) {
 
-   return axios({
-    url: `/api/appointments/${id}`,
-    data: null,
-    method: "DELETE"
-   })
-   .then(() => {
-     
+   return axios.delete(`/api/appointments/${id}`)
+   .then(() => { 
     dispatch({
 type: SET_INTERVIEW, id, interview: null 
     })
@@ -92,13 +61,9 @@ type: SET_INTERVIEW, id, interview: null
 
 
   function bookInterview(id, interview) {
-   return axios({
-    url: `/api/appointments/${id}`,
-    data: {interview},
-    method: "PUT"
-   })
-   .then(() => dispatch({ type: SET_INTERVIEW, id, interview }))
-      
+   return axios.put(`/api/appointments/${id}`, {interview})
+  .then(() => dispatch({ type: SET_INTERVIEW, id, interview }))
+  .catch((err) => {throw new Error(err)})
   }
 return {
   state,
