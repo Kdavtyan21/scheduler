@@ -1,23 +1,23 @@
 # Interview Scheduler
 
-## Setup
+Interview Scheduler is web application built with Reactp that allows users to manage their time effectivelly by having their schedule all sorted out for the week!
 
-Install dependencies with `npm install`.
+## Final Product
 
-## Running Webpack Development Server
+!["screenshot added interview"]()
+!["screenshot of deleting an interview"]()
 
-```sh
-npm start
-```
+## Dependencies
 
-## Running Jest Test Framework
+- axios
+- classnames
+- normalize.css
+- nvm
+- react
+- react-dom
+- react-scripts
 
-```sh
-npm test
-```
+## Getting Started
 
-## Running Storybook Visual Testbed
-
-```sh
-npm run storybook
-```
+- Install all dependencies (using the `npm install` command).
+- Run the development web server using the `npm start` command.
