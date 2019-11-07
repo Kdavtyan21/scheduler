@@ -4,8 +4,8 @@ Interview Scheduler is web application built with Reactp that allows users to ma
 
 ## Final Product
 
-!["screenshot added interview"]()
-!["screenshot of deleting an interview"]()
+!["screenshot added interview"](https://github.com/Kdavtyan21/scheduler/blob/master/public/images/AddingInterview.png)
+!["screenshot of deleting an interview"](https://github.com/Kdavtyan21/scheduler/blob/master/public/images/DeletingInterview.png)
 
 ## Dependencies
 
